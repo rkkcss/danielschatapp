@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.thymeleaf.org">
+<head>
+<th:block th:include="fragments/common.html :: header"></th:block>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	 <div class="container-fluid h-100" id="chat-page">
+ 	<div class="row justify-content-center h-100"> 
+		<th:block th:insert="fragments/common.html :: menu"></th:block>
+		
+			<div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 chat">
+		<div class="card h-100">
+			<div class="card-body">
+				<div class="account-settings text-center">
+					<div class="user-profile">
+						<form >
+							<div class="user-avatar">
+							<form action="/upload" th:action="@{/upload}" th:object="${user}" enctype="multipart/form-data" method="post">
+									
+								<div class="about">
+								</div>
+								<button class="btn btn-primary" style="margin-top: 20px; margin-bottom: 20px" type="submit">Upload</button>
+							</form>
+							</div>
+						</form>	
+						<label class="p-2">Your e-mail address: </label>
+						<h5 class="display-5" th:text="${email}"></h5>
+						<label class="p-2">Your username: </label>
+						<h5 class="display-5" th:text="${username}"></h5>
+					
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	</div> 
+</body>
+</html>

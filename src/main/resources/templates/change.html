@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html 
+	xmlns="http://www.thymeleaf.org" 
+	>
+<head>
+	<meta charset="UTF-8">
+	<title>Congratulation</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	 <div class="container-fluid h-100" id="chat-page">
+ 	<div class="row justify-content-center h-100"> 
+		
+	  <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12 chat">
+		<div class="card h-100">
+			<div class="card-body">
+				<div class="account-settings text-center">
+					<div class=" p-2">
+						<i class="fa fa-check-circle rounded-circle" style="font-size: 150px ; color: green; background-color: white"></i>
+					</div>
+					<div>
+						<h1 class="display-5 text-white">You are successfully changed your <h1></h1></h1>
+						<p class="text-white" style="font-size: 25px">We sent an e-mail about your changes:</p>
+						<h1  style="font-size: 20px; color: aqua;" th:text="${user.email}"></h1> 
+						
+					</div>
+					<div style="margin-top: 50px; margin-bottom: 20px">
+						<form action="/login">
+							<button type="submit" class="btn btn-info">Login now</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	</div> 
+</body>
+</html>

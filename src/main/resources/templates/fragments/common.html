@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+    <head th:fragment="header">
+        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/main.js"></script> 
+    </head>
+    <body>
+
+        <div th:fragment="menu" class="col-md-2 col-xl-1 chat col-sm-12 " style=" padding: 0px; border-radius: 15px;" >
+
+            <div class=" menu-div " style="width: 100%;  border-radius:10cm">
+                <a href="/profile">
+                	<div class="active text-center text-white" style="font-size: 40px; padding: 20px; margin: 10px; border-radius: 20vh;">
+                    	<i class="fa fa-user-alt"></i>
+                	</div>
+				</a>
+				
+				<a href="/home">
+                	<div class="active text-center text-white" style="font-size: 40px; padding: 20px;  margin: 10px; border-radius: 20vh;">
+                    	<i class="fa fa-comment-alt"></i>
+                	</div>
+				</a>
+				
+				<a href="/settings" th:href="@{/settings}" >
+
+                	<div class="active text-center text-white logoutbtn">
+                    	<i class="fa fa-cog "></i>
+                	</div>
+                	
+				</a>
+				
+				<form th:action="@{/logout}" method="post" id="frmlogout">
+					<a href="javascript:{}" onclick="document.getElementById('frmlogout').submit(); return false;">
+                		<div class="active text-center text-white logoutbtn">
+                    		<i class="fa fa-sign-out-alt"></i>
+                		</div>
+					</a>
+				</form>
+            </div>
+        </div>
+
+    </body>
+</html>

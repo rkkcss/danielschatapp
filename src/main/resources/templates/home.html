@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html 
+	xmlns="http://www.thymeleaf.org" 
+	>
+	<head>
+            <title>Chat</title>
+            <th:block th:include="fragments/common.html :: header"></th:block>
+            <script>
+            $(document).ready(function () {
+            connect();
+            });
+            function connect(){
+                        
+
+            var username = [[${username}]];
+            if (username) {
+            var socket = new SockJS('/ws');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, onConnected, onError);
+            }
+            event.preventDefault();
+            }
+
+			$(function () {
+				$('#sendMessage').click(function (e) {
+					$.post({
+						url: '/savemessages',
+						data: $('#messageForm').serialize(),
+						success: console.log('success'),
+					})
+				});
+			});
+        </script>
+
+	</head>
+
+
+	<body>
+		<div class="container-fluid h-100" id="chat-page">
+			<div class="row justify-content-center h-100">
+                            
+                            <th:block th:insert="fragments/common.html :: menu"></th:block>
+
+				<div class="col-md-4 col-xl-3 chat">
+				
+					<div class="card mb-sm-3 mb-md-0 contacts_card">
+					<div class="card-header">
+						<div class="input-group">
+							<h1 style="font-size: 30px; color: white;">Active users</h1>
+						</div>
+					</div>
+					<div class="card-body contacts_body">
+						<ui class="contacts">
+						<li th:each="user :${user}">
+							<div class="d-flex bd-highlight">
+								<div class="img_cont">
+									<img src="img/avatar.jpg" class="rounded-circle user_img">
+
+								</div>
+								<div class="user_info">
+									<span th:text="${user.username}"></span>
+								</div>
+							</div>
+						</li>
+						</ui>
+					</div>
+					<div class="card-footer"></div>
+				</div></div>
+				
+
+				<div class="col-md-6 col-xl-6 chat">
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 card_current text-white card h-100">	
+						<div class="row gutters">
+							<div class="col-6" ><label>Your username: <strong th:text="${#authentication.name}"></strong></label></div>
+							<div class="col-6" ><label>E-mail address: <strong th:text="${email}" style="font-size: 15px"></strong></label></div>						</div>
+					</div>
+					<div class="card">
+						<div class="card-header msg_head">
+							<div class="d-flex bd-highlight">
+								<div class="img_cont">
+									<img src="img/avatar.jpg" class="rounded-circle user_img">
+
+								</div>
+								<div class="user_info">
+									
+									
+								</div>
+								
+							</div>
+							
+							
+						</div>
+						
+						<ul class="card-body msg_card_body" id="messageArea">
+							
+							<li class="d-flex justify-content-start mb-4" th:each="message : ${chatMessage}">
+								
+								<div class="msg_cotainer">
+									
+									<span th:text="${message.content}"></span>
+									<span class="msg_time_send" th:text="${message.sender}"></span>
+								</div>
+							</li>
+
+<!-- 							<li class="d-flex justify-content-end mb-4">
+								<div class="msg_cotainer_send">
+									<span>Hi Khalid i am good tnx how about you?</span>
+								</div>
+								<div class="img_cont_msg">
+									<img src="img/avatar.jpg" class="rounded-circle user_img_msg">
+								</div>
+							</li> -->
+							
+						</ul>
+
+						<div class="card-footer">
+							<form class="input-group" action="#" method="post" id="messageForm" name="messageForm" nameForm="messageForm">
+									
+<!-- 									<div class="input-group-append"> -->
+<!-- 										<span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span> -->
+<!-- 									</div> -->
+									<input type="text" name="content" id="message" class="form-control type_msg" placeholder="Type your message..." required="required"></input>
+									<div class="input-group-append">
+										<button class="input-group-text send_btn" type="submit" id="sendMessage"><i class="fas fa-location-arrow"></i></button>
+									</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+<script th:inline="javascript">
+
+'use strict';
+
+
+var chatPage = document.querySelector('#chat-page');
+var usernameForm = document.querySelector('#usernameForm');
+var messageForm = document.querySelector('#messageForm');
+var messageInput = document.querySelector('#message');
+var messageArea = document.querySelector('#messageArea');
+var connectingElement = document.querySelector('.connecting');
+
+var stompClient = null;
+var username = [[${username}]];
+
+
+
+function connect(event) {
+    username = [[${username}]];
+
+    if(username) {
+
+        var socket = new SockJS('/ws');
+        stompClient = Stomp.over(socket);
+
+        stompClient.connect({}, onConnected, onError);
+    }
+    event.preventDefault();
+}
+
+
+function onConnected() {
+    // Subscribe to the Public Topic
+    stompClient.subscribe('/topic/public', onMessageReceived);
+
+    // Tell your username to the server
+    stompClient.send("/app/chat.addUser",
+        {},
+        JSON.stringify({sender: username, type: 'JOIN'})
+    )
+
+    connectingElement.classList.add('hidden');
+}
+
+
+function onError(error) {
+    connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
+    connectingElement.style.color = 'red';
+}
+
+
+function sendMessage(event) {
+    var messageContent = messageInput.value.trim();
+
+    if(messageContent && stompClient) {
+        var chatMessage = {
+            sender: username,
+            content: messageInput.value,
+            type: 'CHAT'
+        };
+
+        stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
+        messageInput.value = '';
+
+    }
+    event.preventDefault();
+}
+
+
+function onMessageReceived(payload) {
+    var message = JSON.parse(payload.body);
+
+    if(message.type === 'JOIN') {
+
+    } else if (message.type === 'LEAVE') {
+
+    } else {
+        var messageElement = document.createElement('li');
+        var messageDiv = document.createElement('div');
+        var senderElement = document.createElement('span');
+    	var textElement = document.createElement('span');
+        var messageText = document.createTextNode(message.content);
+        var senderSpan = document.createTextNode(message.sender);
+        
+        senderElement.classList.add('msg_time_send');
+        messageElement.classList.add('d-flex', 'justify-content-start', 'mb-4');
+        messageDiv.classList.add('msg_cotainer');
+        messageElement.appendChild(messageDiv);
+
+        
+    }
+    
+    senderElement.appendChild(senderSpan);
+    
+    textElement.appendChild(messageText);
+    messageDiv.appendChild(textElement);
+	messageDiv.appendChild(senderElement);
+    messageArea.appendChild(messageElement);
+    messageArea.scrollTop = messageArea.scrollHeight;
+
+}
+
+
+messageForm.addEventListener('submit', sendMessage, true)
+
+        </script>
+	</body>
+</html>
