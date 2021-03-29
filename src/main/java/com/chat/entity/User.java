@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -16,6 +17,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -37,23 +39,12 @@ public class User {
     
     private String passwordAgain;
     
-    @Lob
-    @Column(nullable = true, columnDefinition = "MEDIUMBLOB")
-    private String image;
-    
     @OneToMany(mappedBy = "user")
     private List<ChatMessage> content;
 
     public User() {
     }
 
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
 
 	public String getEmail() {
 		return email;
@@ -116,7 +107,7 @@ public class User {
     @Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password
-				+ ", passwordAgain=" + passwordAgain + ", photos=" + image + ", content=" + content + "]";
+				+ ", passwordAgain=" + passwordAgain + ", content=" + content + "]";
 	}
 
 

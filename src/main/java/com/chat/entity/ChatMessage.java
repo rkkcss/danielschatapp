@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 
 @Entity
+@Table(name = "messages")
 public class ChatMessage {
 
     @Id
