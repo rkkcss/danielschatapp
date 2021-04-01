@@ -40,7 +40,7 @@ public class SettingService {
 		}
 	}
 	public void changeUsername(User userChange, User originalUser) {
-//			emailService.sendUsernameChange(originalUser.getEmail(), userChange.getUsername(), originalUser.getUsername(), userChange.getUsername());
+			emailService.sendUsernameChange(originalUser.getEmail(), userChange.getUsername(), originalUser.getUsername(), userChange.getUsername());
 			originalUser.setUsername(userChange.getUsername());
 			userRepo.save(originalUser);
 	}
