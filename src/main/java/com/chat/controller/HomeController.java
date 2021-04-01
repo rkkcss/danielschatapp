@@ -121,7 +121,7 @@ public class HomeController {
             String encodedPassword = passwordEncoder.encode(user.getPassword());
             user.setPassword(encodedPassword);
             
-//            emailService.sendMessage(user.getEmail(), user.getUsername());
+            emailService.sendMessage(user.getEmail(), user.getUsername());
             
             userService.userSave(user); // user objektum átadása a service rétegnek
             return "notification";
