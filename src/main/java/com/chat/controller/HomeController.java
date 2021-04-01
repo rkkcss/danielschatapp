@@ -83,7 +83,7 @@ public class HomeController {
         //Üres chatmessage objektum az üzenetek elmentése miatt 
         model.addAttribute("message", new ChatMessage());
         model.addAttribute("chatMessage", message());
-        return "/home";
+        return "home";
     }
 
     @RequestMapping("/registration")
