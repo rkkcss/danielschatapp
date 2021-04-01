@@ -1,16 +1,10 @@
 package com.chat.sevice;
 
-import java.io.IOException;
-import java.util.Base64;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.chat.entity.User;
 import com.chat.repository.UserRepository;
-import com.fasterxml.jackson.databind.deser.Deserializers.Base;
 
 @Service
 public class ProfileService {
@@ -18,5 +12,11 @@ public class ProfileService {
 	@Autowired
 	UserRepository userRepo;
 	
-	
+	public void saveProfileChanges(User oldUser, User newUser) {
+		oldUser.setAboutMe(newUser.getAboutMe());
+		oldUser.setAge(newUser.getAge());
+		oldUser.setSirName(newUser.getSirName());
+		oldUser.setFirstName(newUser.getFirstName());
+		userRepo.save(oldUser);
+	}
 }

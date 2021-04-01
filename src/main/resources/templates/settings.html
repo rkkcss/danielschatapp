@@ -18,21 +18,21 @@ and open the template in the editor.
 	             <th:block th:insert="fragments/common.html :: menu"></th:block>
 
 	<div class="col-xl-9 col-lg-8 col-md-12 col-sm-12 col-12 chat">
-		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 card_current text-white card h-100" >
-			<div class="row gutters">
-				<div class="col-6" ><label>Your username: <strong th:text="${#authentication.name}"></strong></label></div>
+		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 card_current text-white card h-100" style="margin-bottom: 0px;">
+			<div class="row gutters" th:object="${user}">
+				<div class="col-6" ><label>Your username: <strong th:text="${user.username}"></strong></label></div>
 				<div class="col-6" ><label>E-mail address: <strong th:text="${user.email}" style="font-size: 15px"></strong></label></div>
 
 			</div>
 		</div>		
-		<div class="card h-100">
+		<div class="h-100">
 			<div class="card-body col-12 text-white">
 				
 								
-				<div class="row gutters ">
-
+				
+					<div class="settingsSelection card-body">
 						<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-							<h6 class="mb-3 text-warning">Change your username</h6>
+							<h6 class="mb-3 text-warning" style="font-size: 20px">Change your username</h6>
 							<div class="error text-center" th:if="${dBPasswordCheck != true}" th:text="${pwNotMatch}"></div>
 							<div class="error text-center" th:if="${dbUsernameCheck != true}" th:text="${usedUsername}"></div>
 						</div>
@@ -45,7 +45,7 @@ and open the template in the editor.
 								<input type="text" class="form-control" name="username" th:field="*{username}" placeholder="Enter new username">
 							</div>
 						</div>
-						
+					
 						<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 							<div class="form-group">
 								<label for="eMail">Password</label>
@@ -55,10 +55,14 @@ and open the template in the editor.
 								<button class="btn btn-primary" type="submit">Save</button>
 							</div>	
 						</div>
+					</div>	
+					
+					
+					<div class="settingsSelection card-body">	
 					</form>
-
+				
 					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-						<h6 class="mb-3 text-warning ">Change your e-mail address</h6>
+						<h6 class="mb-3 text-warning" style="font-size: 20px">Change your e-mail address</h6>
 						<div class="error text-center" th:if="${dBPasswordCheck != true}" th:text="${emailPwNotMatch}"></div>
 						<div class="error text-center" th:if="${emailCheck != true}" th:text="${usedEmail}"></div>
 					</div>
@@ -82,44 +86,8 @@ and open the template in the editor.
 							</div>
 						</div>
 					</form>
-						
-				</div>
-				<div class="row gutters">
-					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-						<h6 class="mb-3 text-warning">Change your password</h6>
-					</div>
-					
-					<form class="col-xl-12 col row" th:action="@{/changePassword}" method="post">
-						
-						<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-							<div class="form-group">
-								<label >Old password</label>
-								<input type="password" class="form-control" id="oldPassword" placeholder="Enter old password">
-							</div>
-						</div>
-						<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-							<div class="form-group">
-								<label >New password</label>
-								<input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
-							</div>
-						</div>
-						<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-							<div class="form-group">
-								<label >Old password again</label>
-								<input type="password" class="form-control" id="oldPasswordAgain" placeholder="Enter old password again">
-							</div>
-						</div>
-						<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-							<div class="form-group">
-								<label >New password again</label>
-								<input type="password" class="form-control" id="newPasswordAgain" placeholder="Enter new password again">
-							</div>
-						</div>
-						<div class="col-12 text-right">
-							<button class="btn btn-primary" type="submit">Save</button>
-						</div>
-					</form>	
-				</div>
+					</div>	
+				
 			
 				
 			</div>

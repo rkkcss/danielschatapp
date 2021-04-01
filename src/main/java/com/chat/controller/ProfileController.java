@@ -1,18 +1,14 @@
 package com.chat.controller;
 
-import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.chat.entity.User;
 import com.chat.repository.UserRepository;
@@ -31,11 +27,26 @@ public class ProfileController {
 	public String profileDetails(Model model, Authentication loggedInUser, User user) {
 		loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String name = loggedInUser.getName();
-        model.addAttribute("username", name);  
-        model.addAttribute("email", user.getEmail());
+        
+        user = userRepo.findByUsername(name);
+
+        model.addAttribute("user", user);
 		return "profile";
 	}
 	
+	@PostMapping("/saveProfileSettings")
+	public String savechanges(@ModelAttribute User newUser, User user, Model model, Authentication loggedInUser) {
+		loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String name = loggedInUser.getName();
+        
+        user= userRepo.findByUsername(name);
+
+        profileService.saveProfileChanges(user, newUser);
+		
+        model.addAttribute("user", user);
+		return "profile";
+	}
+
 
 
 	

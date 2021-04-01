@@ -1,15 +1,8 @@
 package com.chat.sevice;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.chat.entity.User;
 import com.chat.repository.UserRepository;
@@ -46,11 +39,9 @@ public class SettingService {
 			return true;
 		}
 	}
-	
 	public void changeUsername(User userChange, User originalUser) {
 //			emailService.sendUsernameChange(originalUser.getEmail(), userChange.getUsername(), originalUser.getUsername(), userChange.getUsername());
 			originalUser.setUsername(userChange.getUsername());
-			System.out.println(originalUser.getUsername());
 			userRepo.save(originalUser);
 	}
 	

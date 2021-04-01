@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html 
+	xmlns="http://www.thymeleaf.org" 
+	>
+	<head>
+            <title>Chat</title>
+            <th:block th:include="fragments/common.html :: header"></th:block>
+
+	</head>
+
+
+	<body>
+		<div class="container-fluid h-100" id="chat-page" th:object="${user}">
+			<div class="row justify-content-center h-100">            
+				<th:block th:insert="fragments/common.html :: menu"></th:block>
+				<div class="col-md-12 col-xl-3 chat">
+					<div class="card mb-sm-3 mb-md-0 contacts_card">
+						<div class="card-body contacts_body">
+							<div class="d-flex flex-column align-items-center text-center">
+			                    <img src="/img/avatar.jpg" alt="Admin" class="rounded-circle" width="150">
+			                    <div class="mt-3">
+			                      <h4 th:text="${user.username}" class="text-warning"></h4>
+			                      <p th:text="${user.aboutMe}" class="text-white mb-1"></p>
+			                      
+			                    </div>
+			                </div>
+						</div>
+					</div>
+				</div>
+				
+
+				<div class="col-md-12 col-xl-6  chat">
+					<div class="card">
+		                <div class="card-body">
+		                  <div class="row">
+		                    <div class="col-sm-3">
+		                      <h6 class="mb-0 text-warning">Sir Name</h6>
+		                    </div>
+		                    <div class="col-sm-7 text-white" th:text="${user.sirName}">
+		                    
+		                    </div>
+		                  </div>
+		                  <hr>
+		                  <div class="row">
+		                    <div class="col-sm-3">
+		                      <h6 class="mb-0 text-warning">Firstname</h6>
+		                    </div>
+		                    <div class="col-sm-9 text-white" th:text="${user.firstName}">
+		                      
+		                    </div>
+		                  </div>
+		                  <hr>
+		                  <div class="row">
+		                    <div class="col-sm-3">
+		                      <h6 class="mb-0 text-warning">Username</h6>
+		                    </div>
+		                    <div class="col-sm-9 text-white" th:text="${user.username}">
+		                      
+		                    </div>
+		                  </div>
+		                  <hr>
+		                  <div class="row">
+		                    <div class="col-sm-3">
+		                      <h6 class="mb-0 text-warning">Email</h6>
+		                    </div>
+		                    <div class="col-sm-9 text-white" th:text="${user.email}">
+		                      fip@jukmuh.al
+		                    </div>
+		                  </div>
+		                  <hr>
+		                  <div class="row">
+		                    <div class="col-sm-3">
+		                      <h6 class="mb-0 text-warning">Age</h6>
+		                    </div>
+		                    <div class="col-sm-9 text-white" th:text="${user.age}">
+		                    </div>
+		                  </div>
+		                </div>
+		              </div>				
+					</div>
+				</div>
+			</div>
+
+
+	</body>
+</html>

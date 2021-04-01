@@ -21,11 +21,11 @@
 					<div class=" p-2">
 						<i class="fa fa-check-circle rounded-circle" style="font-size: 150px ; color: green; background-color: white"></i>
 					</div>
-					<div>
-						<h1 class="display-5 text-white">You are successfully changed your <h1></h1></h1>
+					<div th:object="${user}">
+						<h1 class="display-5 text-white">You are successfully changed!</h1>
 						<p class="text-white" style="font-size: 25px">We sent an e-mail about your changes:</p>
 						<h1  style="font-size: 20px; color: aqua;" th:text="${user.email}"></h1> 
-						
+						<p class="text-white" style="font-size: 25px">Now need to log in again.</p>
 					</div>
 					<div style="margin-top: 50px; margin-bottom: 20px">
 						<form action="/login">

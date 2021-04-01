@@ -1,43 +1,117 @@
 <!DOCTYPE html>
-<html
-	xmlns="http://www.thymeleaf.org">
-<head>
-<th:block th:include="fragments/common.html :: header"></th:block>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	 <div class="container-fluid h-100" id="chat-page">
- 	<div class="row justify-content-center h-100"> 
-		<th:block th:insert="fragments/common.html :: menu"></th:block>
-		
-			<div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 chat">
-		<div class="card h-100">
-			<div class="card-body">
-				<div class="account-settings text-center">
-					<div class="user-profile">
-						<form >
-							<div class="user-avatar">
-							<form action="/upload" th:action="@{/upload}" th:object="${user}" enctype="multipart/form-data" method="post">
-									
-								<div class="about">
-								</div>
-								<button class="btn btn-primary" style="margin-top: 20px; margin-bottom: 20px" type="submit">Upload</button>
-							</form>
-							</div>
-						</form>	
-						<label class="p-2">Your e-mail address: </label>
-						<h5 class="display-5" th:text="${email}"></h5>
-						<label class="p-2">Your username: </label>
-						<h5 class="display-5" th:text="${username}"></h5>
-					
-					</div>
+<html 
+	xmlns="http://www.thymeleaf.org" 
+	>
+	<head>
+            <title>Chat</title>
+            <th:block th:include="fragments/common.html :: header"></th:block>
 
+	</head>
+
+
+	<body>
+		<div class="container-fluid h-100" id="chat-page" th:object="${user}">
+			<div class="row justify-content-center h-100">            
+				<th:block th:insert="fragments/common.html :: menu"></th:block>
+				<div class="col-md-12 col-xl-3 chat">
+					<div class="card mb-sm-3 mb-md-0 contacts_card">
+						<div class="card-body contacts_body">
+							<div class="d-flex flex-column align-items-center text-center">
+			                    <img src="/img/avatar.jpg" alt="Admin" class="rounded-circle" width="150">
+			                    <div class="mt-3">
+			                      <h4 th:text="${user.username}" class="text-warning"></h4>
+			                      <p th:text="${user.aboutMe}" class="text-white mb-1"></p>
+			                      
+			                    </div>
+			                </div>
+						</div>
+					</div>
+				</div>
+				
+			
+				<div class="col-md-12 col-xl-6  chat">
+					<div class="card">
+					<form th:action="@{/saveProfileSettings}" th:object="${user}" method="post">
+		                <div class="card-body">
+		                  <div class="row">
+		                    <div class="col-sm-3">
+		                      <h6 class="mb-0 text-warning">Username</h6>
+		                    </div>
+		                    <div class="col-sm-4 text-white" th:text="${user.username}">
+		                    	
+		                    </div>
+
+		                  </div>
+		                  <hr>
+		                  <div class="row">
+		                    <div class="col-sm-3">
+		                      <h6 class="mb-0 text-warning">Sirname</h6>
+		                    </div>
+		                    <div class="col-sm-4 text-white">
+		                    <input type="text" placeholder="Change your Sir name" th:field="*{sirName}" name="sirName" class="form-control">
+		                    </div>  
+		                    </div>
+		                    
+		                  <hr>
+		                  <div class="row">
+		                    <div class="col-sm-3">
+		                      <h6 class="mb-0 text-warning">Firstname</h6>
+		                    </div>
+		                    <div class="col-sm-4 text-white">
+		                    <input type="text" placeholder="Change your Firstname" th:field="*{firstName}" name="firstName" class="form-control">
+		                    </div>                  
+		                  </div>
+		                  <hr>
+		                  <div class="row">
+		                    <div class="col-sm-3">
+		                      <h6 class="mb-0 text-warning">Email</h6>
+		                    </div>
+		                    <div class="col-sm-4 text-white" th:text="${user.email}">
+		                    </div>
+		                  </div>
+		                  <hr>
+		                  <div class="row">
+		                    <div class="col-sm-3">
+		                      <h6 class="mb-0 text-warning">Age</h6>
+		                    </div>
+		                    <div class="col-sm-3 text-white">
+		                    <input type="number" placeholder="Your age" th:field="*{age}" name="age" class="form-control" min="16" max="150">
+		                    </div>
+		                  </div>
+		                   <hr>
+		                  <div class="row">
+		                    <div class="col-sm-3">
+		                      <h6 class="mb-0 text-warning">About you</h6>
+		                    </div>
+		                    <div class="col-sm-8 text-white">
+		                    <textarea placeholder="About you" style="resize: none" maxlength="200" th:field="*{aboutMe}" name="aboutMe" class="form-control" cols="3"></textarea>
+		                    </div>
+		                  </div>
+		                  <hr>
+		                  <div class="row">
+		                    <div class="col-sm-3">
+		                    </div>
+		                    <div class="col-sm-4 text-white">
+		                    
+		                    </div>
+		                  	<div class="col-sm-2">
+		                  		<button class="btn btn-primary" type="submit">Save</button>
+		                  	</div>
+		                  	<div class="col-sm-2">
+		                  		<a th:href="@{/profiles/{username}(username=${user.username})}" class="btn btn-info text-white">My profile</a>
+		                  	</div>
+		                  </div>
+		                  
+		                </div>
+		                 </form>
+		              </div>
+		              
+		                  </div>
+		         				
+					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-	</div>
-	</div> 
-</body>
+
+
+	</body>
 </html>

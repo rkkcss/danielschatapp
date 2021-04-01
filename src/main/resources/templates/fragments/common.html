@@ -9,17 +9,18 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/css/style.css">
         <script src="js/main.js"></script> 
     </head>
     <body>
 
-        <div th:fragment="menu" class="col-md-2 col-xl-1 chat col-sm-12 " style=" padding: 0px; border-radius: 15px;" >
+        <div th:fragment="menu" class="col-lg-12 col-md-12 col-xl-1 chat col-sm-12 col-lg-2" style=" padding: 0px; border-radius: 15px;" >
 
-            <div class=" menu-div " style="width: 100%;  border-radius:10cm">
+            <div class=" menu-div " style="width: 100%; border-radius:10cm;" >
                 <a href="/profile">
                 	<div class="active text-center text-white" style="font-size: 40px; padding: 20px; margin: 10px; border-radius: 20vh;">
-                    	<i class="fa fa-user-alt"></i>
+                    	<i class="fas fa-user"></i>
                 	</div>
 				</a>
 				
@@ -40,7 +41,7 @@
 				<form th:action="@{/logout}" method="post" id="frmlogout">
 					<a href="javascript:{}" onclick="document.getElementById('frmlogout').submit(); return false;">
                 		<div class="active text-center text-white logoutbtn">
-                    		<i class="fa fa-sign-out-alt"></i>
+                    		<i class="fas fa-sign-out-alt"></i>
                 		</div>
 					</a>
 				</form>

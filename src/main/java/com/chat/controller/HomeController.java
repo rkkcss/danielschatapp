@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,13 +22,14 @@ import com.chat.repository.UserRepository;
 import com.chat.sevice.ChatMessageService;
 import com.chat.sevice.EmailService;
 import com.chat.sevice.UserService;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 @Controller
 public class HomeController {
-
+	
+    @Autowired
+    ChatController chatController;
 
 	@Autowired
 	EmailService emailService;
@@ -47,14 +49,24 @@ public class HomeController {
     
     @RequestMapping("/login")
     public String loginEndpoint() {
-        return "/login";
+        return "login";
     }
 
     @RequestMapping("/")
     public String login() {
-        return "/login";
+        return "login";
     }
-
+    
+    @RequestMapping("/profiles/{username}")
+    public String userProfiles(@PathVariable (value = "username") String username, Model model) {
+    	
+    	User user = userRepo.findByUsername(username);
+    	
+    	model.addAttribute("user", user);
+    	
+    	return "userprofiles";
+    }
+    
     @RequestMapping("/home")
     public String homePage(@ModelAttribute @Valid User user, BindingResult result, Model model, ChatMessage message) {
         //autentikált felhasználó elérése
@@ -64,10 +76,9 @@ public class HomeController {
 
         model.addAttribute("user", getUserList());
         user = userRepo.findByUsername(name);
-        
-        String username = user.getUsername();
-        model.addAttribute("username", username);
-        model.addAttribute("email", user.getEmail());
+
+        model.addAttribute("loggedUser", user);
+        model.addAttribute("username", user.getUsername());
         
         //Üres chatmessage objektum az üzenetek elmentése miatt 
         model.addAttribute("message", new ChatMessage());
@@ -83,7 +94,7 @@ public class HomeController {
     }
 
     //Regisztráció kezelése
-    @RequestMapping("/reg")
+    @PostMapping("/reg")
     public String reg(@Valid @ModelAttribute User user, BindingResult result, Model model) {
         User alreadyExist = userRepo.findByUsername(user.getUsername());
         User emailExist = userRepo.findByEmail(user.getEmail());
@@ -117,8 +128,7 @@ public class HomeController {
         }
     }
 
-    @Autowired
-    ChatController chatController;
+
     
     @PostMapping(value = "/savemessages")
     public String saveM(@ModelAttribute ChatMessage message, Model model, BindingResult result) {
@@ -136,8 +146,6 @@ public class HomeController {
             message.setSender(username);
             messageService.saveMessage(message);
         }
-        
-        System.out.println("uzi: " + message.getContent() + "\nSender: " + username);
 
         return "redirect:/home";
     }

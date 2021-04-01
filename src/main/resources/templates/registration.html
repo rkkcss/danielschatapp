@@ -1,84 +1,84 @@
 <!DOCTYPE html>
 <html 
-	xmlns="http://www.thymeleaf.org"
-	>
-<head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
-	<link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-	 <div class="container-fluid h-100" id="chat-page">
- 	<div class="row justify-content-center h-100"> 
-		
-	  <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 chat">
-		<div class="card h-100">
-			<div class="card-body">
-				<div class="account-settings text-center">
-				
-					<h1 class="display-4 text-white" style="padding-bottom: 20px ">Register</h1>
-					
-		      		<div th:if="${emailExist != null}" class="text-center" role="alert">
-                       <p class="text-center error" th:text="${emailExist}"></p>
-                     </div>
-					
-             		<div th:if="${alreadyExist != null}" class="text-center" role="alert">
-                       <p class="text-center error" th:text="${alreadyExist}"></p>
-                     </div>
-                                  
-					<form method="post" th:action="@{/reg}" th:object="${user}" name="registration">
+    xmlns="http://www.thymeleaf.org"
+    >
+    <head>
+        <meta charset="UTF-8">
+        <title>Insert title here</title>
+        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <div class="container-fluid h-100" id="chat-page">
+            <div class="row justify-content-center h-100"> 
 
-					<div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error"></div>
-					  <div class="form-group text-left text-white">
-					    <label class="col-sm-12 col-form-label">Enter username</label>
-					    <div class="col-sm-12">
-					      <input type="text" class="form-control" placeholder="Username" th:field="*{username}" name="username">
-					    </div>
-					  </div>
-					  
-					<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></div>
-					<div class="form-group text-left text-white">
-					    <label class="col-sm-12 col-form-label">Enter e-mail</label>
-					    <div class="col-sm-12">
-					      <input type="text" class="form-control" placeholder="E-mail address" th:field="*{email}" name="email">
-					    </div>
-					  </div>
-					  
-				  	<div class="error">
-					  	<span class="text-center" style="" th:if="${passwordCheck != false}" th:text="${passwordNotMatch}"></span>
+                <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 chat">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="account-settings text-center">
+
+                                <h1 class="display-4 text-white" style="padding-bottom: 20px ">Register</h1>
+
+                                <div th:if="${emailExist != null}" class="text-center" role="alert">
+                                    <p class="text-center error" th:text="${emailExist}"></p>
+                                </div>
+
+                                <div th:if="${alreadyExist != null}" class="text-center" role="alert">
+                                    <p class="text-center error" th:text="${alreadyExist}"></p>
+                                </div>
+
+                                <form method="post" th:action="@{/reg}" th:object="${user}" name="registration">
+
+                                    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error"></div>
+                                    <div class="form-group text-left text-white">
+                                        <label class="col-sm-12 col-form-label">Enter username</label>
+                                        <div class="col-sm-12">
+                                            <input type="text" class="form-control" placeholder="Username" th:field="*{username}" name="username">
+                                        </div>
+                                    </div>
+
+                                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></div>
+                                    <div class="form-group text-left text-white">
+                                        <label class="col-sm-12 col-form-label">Enter e-mail</label>
+                                        <div class="col-sm-12">
+                                            <input type="text" class="form-control" placeholder="E-mail address" th:field="*{email}" name="email">
+                                        </div>
+                                    </div>
+
+                                    <div class="error">
+                                        <span class="text-center" style="" th:if="${passwordCheck != false}" th:text="${passwordNotMatch}"></span>
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></div>
+                                    <div class="form-group text-left text-white">
+                                        <label class="col-sm-12 col-form-label">Enter password</label>
+                                        <div class="col-sm-12">
+                                            <input type="password" class="form-control" placeholder="Password" th:field="*{password}" name="password">
+                                        </div>
+                                    </div>
+
+                                    <div th:if="${#fields.hasErrors('passwordAgain')}" th:errors="*{passwordAgain}" class="error"></div>
+                                    <div class="form-group text-left text-white">
+                                        <label  class="col-sm-12 col-form-label">Enter password again</label>
+                                        <div class="col-sm-12">
+                                            <input type="password" class="form-control" placeholder="Password" th:field="*{passwordAgain}" name="passwordAgain">
+                                        </div>
+                                    </div>
+
+
+                                    <div style="padding-top: 20px; padding-bottom: 20px">
+                                        <button class="btn btn-info" type="submit">Registration</button>
+                                    </div>
+
+                                </form>
+                                <a href="/login" class="text-white"> Have account? Sign in here.</a>
+                            </div>
+                        </div>
                     </div>
-						 <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></div>
-					<div class="form-group text-left text-white">
-					    <label class="col-sm-12 col-form-label">Enter password</label>
-					    <div class="col-sm-12">
-					      <input type="password" class="form-control" placeholder="Password" th:field="*{password}" name="password">
-					    </div>
-					 </div>
-					 
-					 <div th:if="${#fields.hasErrors('passwordAgain')}" th:errors="*{passwordAgain}" class="error"></div>
-					 <div class="form-group text-left text-white">
-					    <label  class="col-sm-12 col-form-label">Enter password again</label>
-					    <div class="col-sm-12">
-					      <input type="password" class="form-control" placeholder="Password" th:field="*{passwordAgain}" name="passwordAgain">
-					    </div>
-					 </div>
-					
-					  
-					  <div style="padding-top: 20px; padding-bottom: 20px">
-					  	<button class="btn btn-info" type="submit">Registration</button>
-					  </div>
-					  
-					 </form>
-					  <a href="/login" class="text-white"> Have account? Sign in here.</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	</div>
-	</div>
+                </div>
+            </div>
+        </div>
 
-</body>
+    </body>
 </html>

@@ -6,13 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
+
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -24,6 +23,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Pattern(regexp = "^[a-zA-Z0-9.\\-\\/+=@_ ]*$", message = "Illegal characters in username.")
     @NotEmpty(message = "Username can not be null.")
     @Length(min = 6, message = "Username must at least 6 characters.")
     private String username;
@@ -39,36 +39,65 @@ public class User {
     
     private String passwordAgain;
     
+    @Pattern(regexp = "^[a-zA-Z0-9.\\-\\/+=@_ ]*$", message = "Illegal characters.")
+    @Column(nullable = true, name = "sir_name", length = 50)
+    private String sirName;
+    
+    @Pattern(regexp = "^[a-zA-Z0-9.\\-\\/+=@_ ]*$", message = "Illegal characters.")
+    @Column(nullable = true, name = "first_name", length = 50)
+    private String firstName;
+    
+    @Column(nullable = true, name = "about_me", length = 100)
+    private String aboutMe;
+    
+    @Column(nullable = true)
+    private Integer age;
+    
     @OneToMany(mappedBy = "user")
     private List<ChatMessage> content;
 
     public User() {
     }
 
+    
+    
+	public Integer getAge() {
+		return age;
+	}
+
+
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+
+
+
+	public String getAboutMe() {
+		return aboutMe;
+	}
+
+
+	public void setAboutMe(String aboutMe) {
+		this.aboutMe = aboutMe.trim().replaceAll("\\s+", " ");
+	}
+
 
 	public String getEmail() {
 		return email;
 	}
 
-
-
 	public void setEmail(String email) {
-		this.email = email;
+		this.email = email.trim().replaceAll("\\s+", "");
 	}
-
-
 
 	public String getPasswordAgain() {
 		return passwordAgain;
 	}
 
-
-
 	public void setPasswordAgain(String passwordAgain) {
-		this.passwordAgain = passwordAgain;
+		this.passwordAgain = passwordAgain.trim().replaceAll("\\s+", "");
 	}
-
-
 
 	public Long getId() {
         return id;
@@ -79,7 +108,7 @@ public class User {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.username = username.trim().replaceAll("\\s+", "");
     }
 
     public String getPassword() {
@@ -87,7 +116,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = password.trim().replaceAll("\\s+", "");
     }
 
     public List<ChatMessage> getContent() {
@@ -102,14 +131,36 @@ public class User {
         this.username = username;
     }
 
-    
 
-    @Override
+
+
+	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password
-				+ ", passwordAgain=" + passwordAgain + ", content=" + content + "]";
+				+ ", passwordAgain=" + passwordAgain + ", sirName=" + sirName + ", firstName=" + firstName
+				+ ", aboutMe=" + aboutMe + ", age=" + age + ", content=" + content + "]";
 	}
 
+
+
+	public String getSirName() {
+		return sirName;
+	}
+
+
+	public void setSirName(String sirName) {
+		this.sirName = sirName.trim();
+	}
+
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName.trim();
+	}
 
 
 	public User(long id, String username, String password) {
